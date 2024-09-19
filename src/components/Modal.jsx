@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 function Modal({ children, open, onClose }) {
   const dialog = useRef();
-
+  // console.log (open)
   useEffect (() => {
     console.log (open)
     if (open) {
