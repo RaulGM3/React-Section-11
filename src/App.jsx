@@ -50,7 +50,6 @@ function App() {
 
   const handleRemovePlace = useCallback (
     function handleRemovePlace() {
-      console.log ('algo llama ')
       setPickedPlaces((prevPickedPlaces) =>
         prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
       );
