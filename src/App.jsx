@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Places from './components/Places.jsx';
 import { AVAILABLE_PLACES } from './data.js';
@@ -11,7 +11,6 @@ const storedIds = JSON.parse (localStorage.getItem ('selectedPlaces')) || [];
 const storedPlaces = storedIds.map (id => AVAILABLE_PLACES.find (place => place.id === id));
 
 function App() {
-  console.log ('app?')
   const [isOpen, setModalIsOpen] = useState(false);
   const selectedPlace = useRef();
   const [availablePlaces, setAvailablePlaces] = useState([]);
@@ -49,24 +48,27 @@ function App() {
     }
   }
 
-  function handleRemovePlace() {
-    console.log ('algo llama ')
-    setPickedPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
-    );
-    setModalIsOpen(false);
-    const storedIds = JSON.parse (localStorage.getItem ('selectedPlaces')) || [];
-    localStorage.setItem ('selectedPlaces', JSON.stringify (storedIds.filter (id => id !== selectedPlace.current)))
-  }
+  const handleRemovePlace = useCallback (
+    function handleRemovePlace() {
+      console.log ('algo llama ')
+      setPickedPlaces((prevPickedPlaces) =>
+        prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
+      );
+      setModalIsOpen(false);
+      const storedIds = JSON.parse (localStorage.getItem ('selectedPlaces')) || [];
+      localStorage.setItem ('selectedPlaces', JSON.stringify (storedIds.filter (id => id !== selectedPlace.current)))
+    }, []
+
+  )
 
   return (
     <>
-      {/* <Modal open={isOpen}>
+      <Modal open={isOpen}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
         />
-      </Modal> */}
+      </Modal>
 
       <header>
         <img src={logoImg} alt="Stylized globe" />

@@ -2,10 +2,11 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 function Modal({ children, open, onClose }) {
+  
   const dialog = useRef();
-  // console.log (open)
+  
   useEffect (() => {
-    console.log (open)
+    console.log ('useeffect', open)
     if (open) {
       dialog.current.showModal();
     } else {
